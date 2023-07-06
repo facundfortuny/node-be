@@ -1,5 +1,5 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   createApplicant,
   getSdkToken,
   checkApplicant,
@@ -9,11 +9,13 @@ import {
   getCheck,
   getDocuments,
   getAutofill,
-} from "./onfido.js";
-import cors from "cors";
+} = require("./onfido.js");
+
+const cors = require("cors");
 
 const app = express();
-const port = 3000;
+const port = 4000;
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -135,16 +137,5 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
 
-// export enum OnfidoCheckStatus {
-// 	In_Progress = 0,
-// 	Awaiting_Applicant = 1,
-// 	Complete = 2,
-// 	Withdrawn = 3,
-// 	Paused = 4,
-// 	Reopened = 5,
-// }
-// OnfidoReportResult {
-// 	Clear = 0,
-// 	Consider = 1,
-// 	Unidentified = 2,
-// }
+// Export the Express API
+module.exports = app;

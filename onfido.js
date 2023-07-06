@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-import { Onfido, Region } from "@onfido/api";
+const dotenv = require("dotenv");
+const { Onfido, Region } = require("@onfido/api");
 
 dotenv.config();
 
@@ -8,7 +8,7 @@ const onfido = new Onfido({
   region: Region.EU,
 });
 
-export const createApplicant = async (firstName, lastName) => {
+const createApplicant = async (firstName, lastName) => {
   try {
     const applicant = await onfido.applicant.create({
       firstName,
@@ -20,11 +20,11 @@ export const createApplicant = async (firstName, lastName) => {
   }
 };
 
-export const getSdkToken = async (applicantId) => {
+const getSdkToken = async (applicantId) => {
   try {
     const sdkToken = await onfido.sdkToken.generate({
       applicantId,
-      referrer: "http://localhost:5173/",
+      referrer: process.env.REFERRER_URL,
     });
     return sdkToken;
   } catch (error) {
@@ -32,7 +32,7 @@ export const getSdkToken = async (applicantId) => {
   }
 };
 
-export const checkApplicant = async (applicantId, reportNames) => {
+const checkApplicant = async (applicantId, reportNames) => {
   try {
     const newCheck = await onfido.check.create({
       applicantId,
@@ -45,7 +45,7 @@ export const checkApplicant = async (applicantId, reportNames) => {
   }
 };
 
-export const getCheck = async (checkId) => {
+const getCheck = async (checkId) => {
   try {
     const check = await onfido.check.find(checkId);
     return check;
@@ -54,7 +54,7 @@ export const getCheck = async (checkId) => {
   }
 };
 
-export const getReports = async (checkId) => {
+const getReports = async (checkId) => {
   try {
     const report = await onfido.report.list(checkId);
     return report;
@@ -63,7 +63,7 @@ export const getReports = async (checkId) => {
   }
 };
 
-export const getReport = async (reportId) => {
+const getReport = async (reportId) => {
   try {
     const report = await onfido.report.find(reportId);
     return report;
@@ -72,7 +72,7 @@ export const getReport = async (reportId) => {
   }
 };
 
-export const findDocument = async (documentId) => {
+const findDocument = async (documentId) => {
   try {
     const document = await onfido.document.find(documentId);
     return document;
@@ -81,7 +81,7 @@ export const findDocument = async (documentId) => {
   }
 };
 
-export const getDocuments = async (applicantId) => {
+const getDocuments = async (applicantId) => {
   try {
     const document = await onfido.document.list(applicantId);
     return document;
@@ -90,11 +90,22 @@ export const getDocuments = async (applicantId) => {
   }
 };
 
-export const getAutofill = async (documentId) => {
+const getAutofill = async (documentId) => {
   try {
     const autofill = await onfido.autofill.perform(documentId);
     return autofill;
   } catch (error) {
     console.log(error.message);
   }
+};
+module.exports = {
+  createApplicant,
+  getSdkToken,
+  checkApplicant,
+  getReports,
+  getReport,
+  findDocument,
+  getCheck,
+  getDocuments,
+  getAutofill,
 };
