@@ -11,6 +11,8 @@ const {
   getAutofill,
 } = require("./onfido.js");
 
+const { getDocument, getImage } = require("./files.js");
+
 const cors = require("cors");
 
 const app = express();
@@ -131,6 +133,18 @@ app.get("/Autofill/:documentId", async (req, res) => {
   console.log(`Autofill ${req.params.documentId}`);
   const document = await getAutofill(req.params.documentId);
   res.send(document);
+});
+
+app.get("/fakePDF", async (req, res) => {
+  console.log(`fakePDF`);
+  const document = getDocument();
+  res.send(document);
+});
+
+app.get("/fakeImage", async (req, res) => {
+  console.log(`fakeImage`);
+  const image = getImage();
+  res.send(image);
 });
 
 app.listen(port, () => {
