@@ -26,6 +26,31 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+app.get("/version", (req, res) => {
+  res.send({
+    version: "ia",
+    api: "https://api.inbestme.com",
+    dashboard: "https://investor.inbestme.com",
+    stageVersion: "ia",
+    stageApi: "https://pegasus.inbestme.com",
+    stageDashboard: "https://irisamber.inbestme.com",
+    testVersion: "ia",
+    testApi: "https://medusa.inbestme.com",
+    testDashboard: "https://anatolia.inbestme.com",
+    localVersion: "ia",
+    localApi: "https://inbdevapi.eu.ngrok.io",
+    localDashboard: "http://localhost:8081",
+    appInfo: {
+      message: {
+        en: "Access to the platform is restricted at the moment for maintenance purposes. We apologize for any inconvenience.",
+        ca: "L'accés a la plataforma està restringit en aquests moments per tasques de manteniment. Lamentem les molèsties.",
+        es: "El acceso a la plataforma está restringido en estos momentos por tareas de mantenimiento. Lamentamos las molestias.",
+      },
+      platform: "all",
+    },
+  });
+});
+
 app.post("/CreateApplicant", async (req, res) => {
   const payload = req.body;
   console.log(`Create applicant ${JSON.stringify(payload)}`);
